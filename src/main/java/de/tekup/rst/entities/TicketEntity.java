@@ -22,7 +22,7 @@ public class TicketEntity {
 	
 	private LocalDateTime dateTime;
 	
-	private int nbCouvets;
+	private int nbCouverts;
 	
 	private double addition;
 	
