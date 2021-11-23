@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.tekup.rst.dto.models.ClientResDTO;
 import de.tekup.rst.dto.models.MetDTO;
 import de.tekup.rst.services.StatService;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,14 @@ public class StatCtrl {
 		LocalDate finDate = LocalDate.parse(fin);
 		return statService.platPlusAcheterQuery(debDate, finDate);
 	}
+	
+	@GetMapping("/api/stats/client/fidele")
+	public ClientResDTO clientFidele(){
+		return statService.clientPlusFidele();
+	}
 
+	@GetMapping("/api/stats/client/jour/{id}")
+	public String clientJour(@PathVariable int id){
+		return statService.jourPlusReservee(id);
+	}
 }
