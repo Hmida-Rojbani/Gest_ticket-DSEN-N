@@ -3,6 +3,8 @@ package de.tekup.rst.services;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -21,6 +23,7 @@ import de.tekup.rst.entities.Plat;
 import de.tekup.rst.entities.TicketEntity;
 import de.tekup.rst.repositories.ClientRepository;
 import de.tekup.rst.repositories.MetRepository;
+import de.tekup.rst.repositories.TicketRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -29,6 +32,7 @@ public class StatService {
 	
 	private MetRepository metRepository;
 	private ClientRepository clientRepository;
+	private TicketRepository ticketRepository;
 	private ModelMapper mapper;
 	
 	public MetDTO platPlusAcheter(LocalDate deb, LocalDate fin) {
@@ -96,6 +100,20 @@ public class StatService {
 							.max(Map.Entry.comparingByValue())
 							.get().getKey();
 		return day.getDisplayName(TextStyle.FULL, new Locale("fr"));
+	}
+	
+	public void revenue() {
+		List<TicketEntity> ticketEntities = ticketRepository.findAll();
+		LocalDate today = LocalDate.now();
+		
+		double todayAddition = ticketEntities.stream()
+								.filter(t -> t.getDateTime().toLocalDate().isEqual(today))
+								.mapToDouble(t -> t.getAddition())
+								.sum();
+		
+		TemporalField weekInYear = WeekFields.ISO.weekOfWeekBasedYear();
+		int nbWeekInYear = today.get(weekInYear);
+		
 	}
 
 }
