@@ -6,6 +6,7 @@ import java.time.format.TextStyle;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class StatService {
 		return day.getDisplayName(TextStyle.FULL, new Locale("fr"));
 	}
 	
-	public void revenue() {
+	public Map<String, Double> revenue() {
 		List<TicketEntity> ticketEntities = ticketRepository.findAll();
 		LocalDate today = LocalDate.now();
 		
@@ -113,6 +114,25 @@ public class StatService {
 		
 		TemporalField weekInYear = WeekFields.ISO.weekOfWeekBasedYear();
 		int nbWeekInYear = today.get(weekInYear);
+		
+		double weekAddition = ticketEntities.stream()
+				.filter(t -> t.getDateTime().get(weekInYear)==today.get(weekInYear)
+				&& t.getDateTime().getYear()==today.getYear())
+				.mapToDouble(t -> t.getAddition())
+				.sum();
+		
+		double monthAddition = ticketEntities.stream()
+				.filter(t -> t.getDateTime().getMonthValue()==today.getMonthValue()
+				&& t.getDateTime().getYear()==today.getYear())
+				.mapToDouble(t -> t.getAddition())
+				.sum();
+		
+		Map<String, Double> map = new HashMap<>();
+		map.put("Jour", todayAddition);
+		map.put("Semaine", weekAddition);
+		map.put("Mois", monthAddition);
+		
+		return map;
 		
 	}
 
