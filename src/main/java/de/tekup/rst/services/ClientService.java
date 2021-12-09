@@ -1,6 +1,9 @@
 package de.tekup.rst.services;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +44,12 @@ public class ClientService {
 //											.collect(Collectors.toList());
 		return clientResDTO;
 		
+	}
+	
+public List<ClientResDTO> getAllClients() {
+		
+		return clientRepository.findAll().stream()
+					.map(ce-> mapper.map(ce, ClientResDTO.class))
+					.collect(Collectors.toList());
 	}
 }

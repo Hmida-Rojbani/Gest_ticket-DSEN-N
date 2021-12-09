@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<div  th:replace="fragments/site-components :: head"></div>
+<body>
+<div th:replace="fragments/site-components :: navbar"></div>
+<div class="container">
+<h1 class="text-center">Add Clients</h1>
+
+<div class="row">
+	<div class="offset-md-3 col-md-6">
+			<form th:object="${client}" method="post" action="/clients/add">  
+			  <!-- Name input -->
+			  <div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example0">Nom</label>
+			    <input th:field="*{nom}"  type="text" id="form4Example0" class="form-control" required="required"/>
+			  	<div class="form-text text-danger" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}">We'll never share your 
+						email with anyone else.</div> 
+			  </div>
+			  <div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example1">Prénom</label>
+			    <input th:field="*{prenom}"  type="text" id="form4Example1" class="form-control"  required="required"/>
+			 	<div class="form-text text-danger" th:if="${#fields.hasErrors('prenom')}" th:errors="*{prenom}">We'll never share your 
+						email with anyone else.</div> 
+			  </div>
+			  <div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example2">Date De Naissance</label>
+			    <input th:field="*{date}"  type="date" id="form4Example2" class="form-control" required="required" />
+			  	<div class="form-text text-danger" th:if="${#fields.hasErrors('dateDeNaissance')}" th:errors="*{dateDeNaissance}">We'll never share your 
+						email with anyone else.</div> 
+			  </div>
+			  <div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example3">E-mail</label>
+			    <input th:field="*{courriel}"  type="email" id="form4Example3" class="form-control" required="required" />
+			 	<div class="form-text text-danger" th:if="${#fields.hasErrors('courriel')}" th:errors="*{courriel}">We'll never share your 
+						email with anyone else.</div> 
+			     </div>
+			<div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example4">Téléphone</label>
+			    <input th:field="*{telephone}"  type="text" id="form4Example4" class="form-control" required="required" />
+			 <div class="form-text text-danger" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}">We'll never share your 
+						email with anyone else.</div> 
+			     </div>
+			 
+			  <!-- Submit button -->
+			  <div class="d-grid gap-2">
+			  	<button type="submit" class="btn btn-primary mb-4">Send</button>
+			  </div>
+			</form>
+	</div>
+</div>
+
+</div>
+
+<div  th:replace="fragments/site-components :: footerScript"></div>
+</body>
+</html>

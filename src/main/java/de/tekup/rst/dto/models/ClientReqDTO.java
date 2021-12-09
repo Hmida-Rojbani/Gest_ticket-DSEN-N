@@ -20,9 +20,17 @@ public class ClientReqDTO {
 	@Size(min=3, max = 50)
 	private String prenom;
 	@Past
-	private LocalDate dateDeNaissance;
+	private LocalDate dateDeNaissance = LocalDate.MIN;
 	@Email
 	private String courriel;	
-	@Pattern(regexp = "^[0-9]{8}$")
+	@Pattern(regexp = "^[0-9]{8}$",message = "doit containt 8 chiffres")
 	private String telephone;
+	
+	public String getDate() {
+		return dateDeNaissance.toString();
+	}
+	
+	public void setDate(String date) {
+		dateDeNaissance = LocalDate.parse(date);
+	}
 }

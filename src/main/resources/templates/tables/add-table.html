@@ -5,6 +5,39 @@
 <div th:replace="fragments/site-components :: navbar"></div>
 <div class="container">
 <h1 class="text-center">Add Tables</h1>
+
+<div class="row">
+	<div class="offset-md-3 col-md-6">
+			<form th:object="${table}" method="post" action="/tables/add">  
+			  <!-- Name input -->
+			  <div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example1">Nombre de couverts</label>
+			    <input th:field="*{nbCouverts}"  type="number" id="form4Example1" class="form-control" min="2"/>
+			  </div>
+			  <div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example2">Supplement</label>
+			    <input th:field="*{supplement}"  type="number" id="form4Example2" class="form-control" min="0" step="0.5" />
+			  </div>
+			  <div class="form-outline mb-4">
+			  
+			    <label class="form-label" for="form4Example3">Supplement</label>
+			    <select th:field="*{type}"  class="form-select" id="form4Example3" aria-label="Default select example">
+				  <option th:each="tp : ${T(de.tekup.rst.entities.TableType).values()}" th:text="${tp.displayValue}" th:value="${tp}">Open this select menu</option>
+				
+				</select>
+			    </div>
+			
+			 
+			  <!-- Submit button -->
+			  <div class="d-grid gap-2">
+			  	<button type="submit" class="btn btn-primary mb-4">Send</button>
+			  </div>
+			</form>
+	</div>
+</div>
+
 </div>
 
 <div  th:replace="fragments/site-components :: footerScript"></div>
